@@ -1,0 +1,20 @@
+.headerContainer {
+    padding: 16px 32px;
+    height: 64px;
+    background-color: #1677ff;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+
+.headerWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerRightSide {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}

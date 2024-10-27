@@ -1,0 +1,49 @@
+.serviceCardWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 400px;
+    height: 400px;
+
+    .serviceCardLeftWrapper {
+        margin-right: 2em;
+    }
+
+    &.reverse {
+        flex-direction: row-reverse;
+
+        .serviceCardLeftWrapper {
+            margin-left: 2em;
+        }
+    }
+}
+
+.serviceCardLeft {
+    display: flex;
+    align-items: center;
+}
+
+.serviceCardRight {
+    height: 100%;
+}
+
+.serviceCardLeft,
+.serviceCardRight {
+    width: 50%;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.textInfo {
+    margin-bottom: 1em;
+}
+
+.serviceImg {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
