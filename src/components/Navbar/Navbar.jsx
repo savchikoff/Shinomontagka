@@ -1,16 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { NAVIGATION } from '../../constants/navigation';
+import { PATH_TO_PAGE_NAME } from '../../constants/pathToPageName';
 import classes from './Navbar.module.css';
-
-const PATH_TO_PAGE_NAME = {
-    "/": "Главная",
-    "/about": "О нас",
-    "/contacts": "Контакты",
-    "/faq": "FAQ",
-    "/gallery": "Галерея",
-    "/prices": "Цены",
-    "/services": "Услуги"
-}
 
 function Navbar() {
     return (

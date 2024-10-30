@@ -1,4 +1,5 @@
 import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 import RequestModalProvider from '../../context/RequestModalProvider'
 import PagesContainer from '../PagesContainer/PagesContainer'
 
@@ -8,6 +9,7 @@ function AppLayout() {
             <RequestModalProvider>
                 <Header />
                 <PagesContainer />
+                <Footer />
             </RequestModalProvider>
         </div>
     )

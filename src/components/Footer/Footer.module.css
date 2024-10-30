@@ -1,0 +1,39 @@
+.footerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px;
+    background-color: #333;
+    padding: 64px 32px;
+}
+
+.footerTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footerLinks {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.footerContacts {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 0.5em;
+}
+
+.footerContact {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: #FFF;
+}
+
+.footerBottom {
+    display: flex;
+    justify-content: space-between;
+}

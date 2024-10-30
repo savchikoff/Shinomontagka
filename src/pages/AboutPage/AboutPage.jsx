@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Menu } from 'antd';
 import {
-    ContainerOutlined,
-    DesktopOutlined,
-    PieChartOutlined,
+    FileDoneOutlined,
+    PaperClipOutlined,
+    InfoCircleOutlined,
 } from '@ant-design/icons';
 import RequisitesSection from "../../components/RequisitesSection/RequisitesSection"
 import classes from './AboutPage.module.css';
 
 const ITEMS = [
-    { key: '1', icon: <PieChartOutlined />, label: 'О компании' },
-    { key: '2', icon: <DesktopOutlined />, label: 'Документы' },
-    { key: '3', icon: <ContainerOutlined />, label: 'Реквизиты' },
+    { key: '1', icon: <InfoCircleOutlined />, label: 'О компании' },
+    { key: '2', icon: <PaperClipOutlined />, label: 'Документы' },
+    { key: '3', icon: <FileDoneOutlined />, label: 'Реквизиты' },
 ];
 
 

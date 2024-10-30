@@ -1,8 +1,8 @@
-import React from 'react'
+import TireServiceCalculator from '../../components/TireServiceCalculator/TireServiceCalculator'
 
 function PricesPage() {
     return (
-        <div>PricesPage</div>
+        <TireServiceCalculator />
     )
 }
 
