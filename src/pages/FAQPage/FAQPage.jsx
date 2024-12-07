@@ -1,12 +1,17 @@
-import { Collapse, Divider } from 'antd';
+import { Collapse, Typography } from 'antd';
 import { FAQ_ITEMS } from '../../constants/faqItems';
+import classes from './FAQPage.module.css';
+
+const { Title } = Typography;
 
 function FAQPage() {
     return (
-        <>
-            <Divider orientation='center'>FAQ</Divider>
+        <div className={classes.faqWrapper}>
+            <Title level={1}>
+                FAQ
+            </Title>
             <Collapse items={FAQ_ITEMS} size="large" />
-        </>
+        </div>
     )
 }
 

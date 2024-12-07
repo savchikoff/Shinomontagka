@@ -1,8 +1,8 @@
-import React from 'react'
+import { ServicesList } from '../../components/ServicesList/ServicesList'
 
 function ServicesPage() {
     return (
-        <div>ServicesPage</div>
+        <ServicesList />
     )
 }
 

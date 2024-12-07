@@ -1,7 +1,7 @@
 import { Typography, Carousel } from 'antd';
 import classes from './GallerySection.module.css';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const contentStyle = {
     margin: 0,

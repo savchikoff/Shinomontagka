@@ -1,70 +1,85 @@
-import { useState } from 'react';
-import { Form, InputNumber, Button, Typography } from 'antd';
+import { useEffect, useState, useContext } from 'react';
+import { Form, Button, Typography, Select } from 'antd';
+import Loader from '../Loader/Loader';
+import { useFetchCSVData } from '../../hooks/useFetchCSVData';
+import { RequestModalContext } from '../../context/RequestModalProvider';
 
 const { Title } = Typography;
+const { Option } = Select;
 
 function TireServiceCalculator() {
     const [form] = Form.useForm();
     const [totalCost, setTotalCost] = useState(null);
+    const [servicePrices, setServicePrices] = useState([]);
+
+    const { handleModal } = useContext(RequestModalContext);
+
+    const [data, loading, error] = useFetchCSVData("https://docs.google.com/spreadsheets/d/e/2PACX-1vRnAlvXcAKFung1YPlTzZghpXifv6ieXqGLV0GYCUhVYtysMMY4F_jBHr3wkJg9V4DXlATqtDFkUtNi/pub?output=csv");
 
     const onFinish = (values) => {
-        const { tireCount, serviceType } = values;
-        let costPerTire = 0;
+        const { serviceTypes } = values;
+        let total = 0;
 
-        switch (serviceType) {
-            case 'mounting':
-                costPerTire = 10; // Примерная стоимость монтажа
-                break;
-            case 'balancing':
-                costPerTire = 5; // Примерная стоимость балансировки
-                break;
-            case 'repair':
-                costPerTire = 15; // Примерная стоимость ремонта
-                break;
-            default:
-                break;
-        }
+        serviceTypes.forEach((type) => {
+            const service = servicePrices.find((service) => service.serviceType === type);
+            if (service) {
+                total += service.price;
+            }
+        });
 
-        const total = tireCount * costPerTire;
         setTotalCost(total);
     };
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            const prices = data.map(service => {
+                const [_, name, price] = Object.values(service);
+
+                return ({
+                    serviceType: name,
+                    price: Number(price)
+                });
+            });
+            setServicePrices(prices);
+        }
+    }, [data]);
+
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <>
             <Title level={2}>Калькулятор стоимости услуг шиномонтажки</Title>
             <Form form={form} onFinish={onFinish} layout="vertical">
                 <Form.Item
-                    label="Количество шин"
-                    name="tireCount"
-                    rules={[{ required: true, message: 'Пожалуйста, введите количество шин!' }]}
+                    label="Типы услуг"
+                    name="serviceTypes"
+                    rules={[{ required: true, message: 'Пожалуйста, выберите хотя бы одну услугу!' }]}
                 >
-                    <InputNumber min={1} />
-                </Form.Item>
-
-                <Form.Item
-                    label="Тип услуги"
-                    name="serviceType"
-                    rules={[{ required: true, message: 'Пожалуйста, выберите тип услуги!' }]}
-                >
-                    <select>
-                        <option value="mounting">Монтаж</option>
-                        <option value="balancing">Балансировка</option>
-                        <option value="repair">Ремонт</option>
-                    </select>
+                    <Select mode="multiple" placeholder="Выберите услуги">
+                        {servicePrices.map((service) => (
+                            <Option key={service.serviceType} value={service.serviceType}>
+                                {service.serviceType}
+                            </Option>
+                        ))}
+                    </Select>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
                         Рассчитать
                     </Button>
+
+                    {totalCost ? <Button type="primary" onClick={handleModal}>Подробнее</Button> : null}
                 </Form.Item>
             </Form>
 
-            {totalCost ? (
+            {totalCost !== null && (
                 <div>
                     <Title level={4}>Общая стоимость: {totalCost} руб.</Title>
                 </div>
-            ) : null}
+            )}
         </>
     );
 };
