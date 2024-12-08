@@ -1,11 +1,14 @@
+import { useSelector } from 'react-redux';
 import { Typography } from 'antd';
 import classes from './ServicesSection.module.css';
 import ServiceCard from '../ServiceCard/ServiceCard';
-import { SERVICES } from '../../constants/services';
+import { selectAllServices } from '../../redux/selectors/servicesSelectors';
 
 const { Title, Text } = Typography;
 
 function ServicesSection() {
+    const services = useSelector(selectAllServices)
+
     return (
         <section className={classes.servicesSectionWrapper}>
             <div className={classes.servicesSectionTextWrapper}>
@@ -14,7 +17,16 @@ function ServicesSection() {
             </div>
 
             <div className={classes.serviceCards}>
-                {SERVICES.map(service => (<ServiceCard key={service.id} {...service} />))}
+
+                {
+                    services.map(service => {
+                        const [id, name, price] = Object.values(service);
+
+                        return (
+                            <ServiceCard key={id} id={id} price={price} header={name} />
+                        )
+                    })
+                }
             </div>
         </section>
     )

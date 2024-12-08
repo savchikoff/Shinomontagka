@@ -1,0 +1,17 @@
+.burger {
+    position: relative;
+}
+
+.navItems {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 0;
+    position: absolute;
+    background-color: #1677ff;
+    width: 100dvw;
+    left: 0;
+    top: 120px;
+}

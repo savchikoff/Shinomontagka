@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import RequisitesSection from "../../components/RequisitesSection/RequisitesSection"
 import classes from './AboutPage.module.css';
+import EmptyView from '../../components/EmptyView/EmptyView';
 
 const ITEMS = [
     { key: '1', icon: <InfoCircleOutlined />, label: 'О компании' },
@@ -23,9 +24,9 @@ function AboutPage() {
             case '1':
                 return <RequisitesSection />;
             case '2':
-                return <div>Контент для Option 2</div>;
+                return <EmptyView />;
             case '3':
-                return <div>Контент для Option 3</div>;
+                return <EmptyView />;
             default:
                 return null;
         }
@@ -41,7 +42,7 @@ function AboutPage() {
                 defaultOpenKeys={['1']}
                 items={ITEMS}
                 onClick={handleMenuClick}
-                style={{ height: "calc(100dvh - 64px)" }}
+                style={{ height: "calc(100dvh - 80px)" }}
             />
             <div>
                 {renderContent()}

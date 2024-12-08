@@ -11,12 +11,14 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .footerLinks {
     display: flex;
     align-items: center;
     gap: 1em;
+    flex-wrap: wrap;
 }
 
 .footerContacts {
@@ -36,4 +38,19 @@
 .footerBottom {
     display: flex;
     justify-content: space-between;
+}
+
+.footerLink {
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+
+    &.active {
+        border: 1px solid #ffffff;
+        color: #ffffff;
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
 }

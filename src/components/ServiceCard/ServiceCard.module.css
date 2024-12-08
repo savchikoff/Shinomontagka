@@ -48,4 +48,32 @@
     width: 100%;
 }
 
-@media screen and (max-width: )
+@media screen and (max-width: 920px) {
+    .serviceCardWrapper {
+        height: fit-content;
+        max-height: fit-content;
+        flex-direction: column;
+        gap: 16px;
+
+        .serviceCardLeftWrapper {
+            margin-right: 0;
+        }
+
+        &.reverse {
+            flex-direction: column;
+
+            .serviceCardLeftWrapper {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .serviceCardLeft,
+    .serviceCardRight {
+        width: 100%;
+    }
+
+    .serviceImg {
+        height: 400px;
+    }
+}

@@ -1,8 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Typography, Select } from 'antd';
 import Loader from '../Loader/Loader';
-import { useFetchCSVData } from '../../hooks/useFetchCSVData';
 import { RequestModalContext } from '../../context/RequestModalProvider';
+import { addSelectedService, removeSelectedService } from '../../redux/actionCreators/selectedServicesActionCreators';
+import { selectSelectedServices } from '../../redux/selectors/servicesSelectors';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -14,7 +16,12 @@ function TireServiceCalculator() {
 
     const { handleModal } = useContext(RequestModalContext);
 
-    const [data, loading, error] = useFetchCSVData("https://docs.google.com/spreadsheets/d/e/2PACX-1vRnAlvXcAKFung1YPlTzZghpXifv6ieXqGLV0GYCUhVYtysMMY4F_jBHr3wkJg9V4DXlATqtDFkUtNi/pub?output=csv");
+    const dispatch = useDispatch();
+    const { data, loading } = useSelector((state) => state.services);
+    const selectedServices = useSelector(selectSelectedServices);
+
+    console.log(selectedServices);
+
 
     const onFinish = (values) => {
         const { serviceTypes } = values;
@@ -28,6 +35,20 @@ function TireServiceCalculator() {
         });
 
         setTotalCost(total);
+    };
+
+    const handleServiceChange = (selected) => {
+        const addedServices = selected.filter((service) => !selectedServices.includes(service));
+        const removedServices = selectedServices.filter((service) => !selected.includes(service));
+
+        console.log(addedServices);
+
+        addedServices.forEach((service) => {
+            dispatch(addSelectedService(service));
+        });
+        removedServices.forEach((service) => {
+            dispatch(removeSelectedService(service));
+        });
     };
 
     useEffect(() => {
@@ -57,7 +78,7 @@ function TireServiceCalculator() {
                     name="serviceTypes"
                     rules={[{ required: true, message: 'Пожалуйста, выберите хотя бы одну услугу!' }]}
                 >
-                    <Select mode="multiple" placeholder="Выберите услуги">
+                    <Select mode="multiple" placeholder="Выберите услуги" onChange={handleServiceChange}>
                         {servicePrices.map((service) => (
                             <Option key={service.serviceType} value={service.serviceType}>
                                 {service.serviceType}
