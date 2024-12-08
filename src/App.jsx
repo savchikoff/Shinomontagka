@@ -1,18 +1,19 @@
-import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { Provider } from 'react-redux';
+import { ConfigProvider } from 'antd';
 import 'react-toastify/dist/ReactToastify.css';
 import Router from './components/Router/Router';
+import { store } from './redux/store';
 
 function App() {
-  useEffect(() => {
-    window.process = {
-      ...window.process,
-    };
-  }, []);
 
   return (
     <>
-      <Router />
+      <ConfigProvider theme={{ token: { fontFamily: "Montserrat" } }}>
+        <Provider store={store}>
+          <Router />
+        </Provider>
+      </ConfigProvider>
       <ToastContainer />
     </>
   )

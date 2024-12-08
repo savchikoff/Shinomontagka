@@ -1,16 +1,26 @@
-import { useState } from 'react';
-import { Modal, Form, Input, } from "antd";
+import { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Modal, Form, Input, Select } from "antd";
 import { toast } from 'react-toastify';
-import { EmailParams, MailerSend, Recipient, Sender } from "mailersend";
+import { RequestModalContext } from '../../context/RequestModalProvider';
+import { selectAllServices, selectSelectedServices } from '../../redux/selectors/servicesSelectors';
+import { addSelectedService, removeSelectedService, clearSelectedServices } from '../../redux/actionCreators/selectedServicesActionCreators';
+import { sendEmailRequest } from '../../redux/actionCreators/emailRequestActionCreators';
+import { emailRequestIsLoadingSelector, emailRequestIsSuccessSelector, emailRequestErrorSelector } from '../../redux/selectors/emailRequestSelectors';
+
+const { Option } = Select;
 
 function RequestModal({ open, onCancel }) {
     const [form] = Form.useForm();
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
+    const { handleModal } = useContext(RequestModalContext);
 
-    const mailerSend = new MailerSend({
-        apiKey: "mlsn.d5a8a4df884696b633b731c89431e9ddeae7ed4a0c19a0ccfe8c6e7ab49d331b"
-    });
+    const dispatch = useDispatch();
+
+    const services = useSelector(selectAllServices);
+    const selectedServices = useSelector(selectSelectedServices);
+    const isEmailRequestLoading = useSelector(emailRequestIsLoadingSelector);
+    const isEmailRequestSuccess = useSelector(emailRequestIsSuccessSelector);
+    const emailRequestError = useSelector(emailRequestErrorSelector);
 
     const notify = (isError) => {
         const message = isError
@@ -31,100 +41,56 @@ function RequestModal({ open, onCancel }) {
         });
     };
 
-    const onFinish = (values) => {
-        const emailHtml = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Request Details</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    line-height: 1.6;
-                    margin: 20px;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin: 20px 0;
-                }
-                th, td {
-                    text-align: left;
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                }
-                th {
-                    background-color: #f4f4f4;
-                }
-            </style>
-        </head>
-        <body>
-            <h2>Новая заявка</h2>
-            <p>Вы получили новую заявку с формы:</p>
-            <table>
-                <tr>
-                    <th>Поле</th>
-                    <th>Значение</th>
-                </tr>
-                <tr>
-                    <td>Ваше имя</td>
-                    <td>${values.name || 'Не указано'}</td>
-                </tr>
-                <tr>
-                    <td>Телефон</td>
-                    <td>${values.phone || 'Не указано'}</td>
-                </tr>
-                <tr>
-                    <td>E-mail</td>
-                    <td>${values.email || 'Не указано'}</td>
-                </tr>
-                <tr>
-                    <td>Услуга</td>
-                    <td>${values.service || 'Не указано'}</td>
-                </tr>
-                <tr>
-                    <td>Сообщение</td>
-                    <td>${values.message || 'Не указано'}</td>
-                </tr>
-            </table>
-            <p>Пожалуйста, свяжитесь с клиентом в ближайшее время.</p>
-        </body>
-        </html>
-        `;
+    const onFinish = async (values) => {
+        const transformedValues = {
+            ...values,
+            service: values.serviceTypes.join(', '),
+        };
+        dispatch(sendEmailRequest(transformedValues));
+    };
 
-        const sentFrom = new Sender("MS_BAKI6l@trial-x2p03476n3pgzdrn.mlsender.net", `${values.email}`);
-        const recipients = [
-            new Recipient("savchik.official@gmail.com", "Your Client")
-        ];
-        const emailParams = new EmailParams()
-            .setFrom(sentFrom)
-            .setTo(recipients)
-            .setSubject("Новая заявка на обслуживание!")
-            .setHtml(emailHtml);
+    const onFinishFailed = () => {
+        notify(true);
+    };
 
-        mailerSend.email.send(emailParams).then(() => {
-            notify();
-        }).catch(() => {
-            notify();
+    const handleServiceChange = (selected) => {
+        const addedServices = selected.filter((service) => !selectedServices.includes(service));
+        const removedServices = selectedServices.filter((service) => !selected.includes(service));
+
+        addedServices.forEach((service) => {
+            dispatch(addSelectedService(service));
+        });
+        removedServices.forEach((service) => {
+            dispatch(removeSelectedService(service));
         });
     };
 
-
-    const onFinishFailed = (errorInfo) => {
-        console.error('Form submission failed', errorInfo);
-    }
+    useEffect(() => {
+        if (isEmailRequestSuccess) {
+            notify(false);
+            form.resetFields();
+            handleModal();
+        } else if (emailRequestError) {
+            notify(true);
+        }
+    }, [isEmailRequestSuccess, emailRequestError]);
 
     return (
-        <Modal title="Оставить заявку" open={open} onCancel={onCancel} onOk={() => form.submit()} centered>
+        <Modal
+            title="Оставить заявку"
+            open={open}
+            onCancel={onCancel}
+            onOk={() => form.submit()}
+            centered
+            okButtonProps={{ loading: isEmailRequestLoading, disabled: isEmailRequestLoading }}
+        >
             <Form
                 form={form}
                 name="basic"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 style={{ maxWidth: 600 }}
-                initialValues={{ remember: true }}
+                initialValues={{ remember: true, serviceTypes: selectedServices }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
@@ -146,14 +112,30 @@ function RequestModal({ open, onCancel }) {
                 <Form.Item
                     label="E-mail:"
                     name="email"
+                    rules={[{ required: true, message: 'Пожалуйста введите вашу почту!' }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
                     label="Услуга:"
-                    name="service"
+                    name="serviceTypes"
+                    rules={[{ required: true, message: 'Пожалуйста выберите хотя бы одну услугу!' }]}
                 >
-                    <Input />
+                    <Select
+                        mode="multiple"
+                        placeholder="Выберите услуги"
+                        onChange={handleServiceChange}
+                    >
+                        {services.map(service => {
+                            const [id, name] = Object.values(service);
+
+                            return (
+                                <Option key={id} value={name}>
+                                    {name}
+                                </Option>
+                            )
+                        })}
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     label="Cообщение:"
@@ -163,7 +145,7 @@ function RequestModal({ open, onCancel }) {
                 </Form.Item>
             </Form>
         </Modal>
-    )
+    );
 }
 
 export default RequestModal;

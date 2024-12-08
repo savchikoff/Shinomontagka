@@ -1,9 +1,12 @@
 .headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 16px 32px;
-    height: 64px;
+    height: 80px;
     background-color: #1677ff;
     position: fixed;
-    width: 100%;
+    width: 100dvw;
     z-index: 999;
 }
 
@@ -11,10 +14,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%
 }
 
 .headerRightSide {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 16px;
+}
+
+@media (max-width: 920px) {
+    .headerContainer {
+        height: 120px;
+    }
+
+    .headerWrapper {
+        flex-direction: column;
+        gap: 8px;
+    }
 }

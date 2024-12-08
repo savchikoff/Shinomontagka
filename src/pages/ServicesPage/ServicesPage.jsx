@@ -1,8 +1,11 @@
 import { ServicesList } from '../../components/ServicesList/ServicesList'
+import classes from "./ServicesPage.module.css";
 
 function ServicesPage() {
     return (
-        <ServicesList />
+        <div className={classes.servicesWrapper}>
+            <ServicesList />
+        </div>
     )
 }
 

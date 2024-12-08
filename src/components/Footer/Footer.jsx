@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
+import clsx from 'clsx';
 import { Divider } from 'antd';
 import { PhoneOutlined, MailOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { NAVIGATION } from '../../constants/navigation';
 import { PATH_TO_PAGE_NAME } from '../../constants/pathToPageName';
 import classes from './Footer.module.css';
+import { scrollToTop } from '../../utils/scrollToTop';
 
 function Footer() {
     return (
@@ -11,7 +13,7 @@ function Footer() {
             <div className={classes.footerTop}>
                 <div className={classes.footerLinks}>
                     {NAVIGATION[0].children.map(({ path }, index) =>
-                        <NavLink to={path} key={index} className={({ isActive }) => [classes.navbarItem, isActive ? classes.active : undefined]}>
+                        <NavLink onClick={scrollToTop} to={path} key={index} className={({ isActive }) => clsx(classes.footerLink, isActive ? classes.active : undefined)}>
                             {PATH_TO_PAGE_NAME[path]}
                         </NavLink>)
                     }
