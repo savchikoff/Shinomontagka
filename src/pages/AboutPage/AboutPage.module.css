@@ -3,3 +3,18 @@
     grid-template-columns: 2fr 5fr;
     padding: 1.5em 0;
 }
+
+.menu {
+    height: calc(100dvh - 80px);
+}
+
+@media screen and (max-width: 920px) {
+    .aboutPageContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .menu {
+        height: min-content;
+        border-inline-end: none !important;
+    }
+}

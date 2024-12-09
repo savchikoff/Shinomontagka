@@ -58,6 +58,7 @@ h6,
 p {
   font-size: inherit;
   font-weight: inherit;
+  word-break: normal !important;
 }
 
 ul,

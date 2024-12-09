@@ -19,7 +19,7 @@ function PhotosSection() {
                 <Text>Фотографии могут рассказать больше, чем тексты. Посмотрите реальные фотографии и звоните по телефону +375 (25) 918-08-08 в будние дни с 9:00 до 21:00 или оставьте заявку на сайте в режиме 24/7. </Text>
             </div>
 
-            <Carousel autoplay>
+            <Carousel autoplay className={classes.carousel}>
                 <div>
                     <h3 style={contentStyle}>1</h3>
                 </div>

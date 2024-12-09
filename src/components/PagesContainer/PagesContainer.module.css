@@ -2,3 +2,9 @@
     padding: 80px 32px 0;
     min-height: calc(100dvh - 400px);
 }
+
+@media screen and (max-width: 920px) {
+    .container {
+        padding: 120px 32px 0;
+    }
+}

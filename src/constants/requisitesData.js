@@ -1,11 +1,11 @@
 const COLUMNS = [
     {
-        title: 'Age',
+        title: 'Name',
         dataIndex: 'name',
         key: 'name',
     },
     {
-        title: 'Address',
+        title: 'Value',
         dataIndex: 'value',
         key: 'value',
     }

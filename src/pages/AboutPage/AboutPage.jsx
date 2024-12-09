@@ -42,7 +42,7 @@ function AboutPage() {
                 defaultOpenKeys={['1']}
                 items={ITEMS}
                 onClick={handleMenuClick}
-                style={{ height: "calc(100dvh - 80px)" }}
+                className={classes.menu}
             />
             <div>
                 {renderContent()}
