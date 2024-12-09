@@ -5,6 +5,7 @@ import Loader from '../Loader/Loader';
 import { RequestModalContext } from '../../context/RequestModalProvider';
 import { addSelectedService, removeSelectedService } from '../../redux/actionCreators/selectedServicesActionCreators';
 import { selectSelectedServices } from '../../redux/selectors/servicesSelectors';
+import classes from "./TireServiceCalculator.module.css";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -72,7 +73,7 @@ function TireServiceCalculator() {
     return (
         <>
             <Title level={2}>Калькулятор стоимости услуг шиномонтажки</Title>
-            <Form form={form} onFinish={onFinish} layout="vertical">
+            <Form form={form} onFinish={onFinish} layout="vertical" className={classes.form}>
                 <Form.Item
                     label="Типы услуг"
                     name="serviceTypes"

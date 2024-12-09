@@ -77,3 +77,9 @@
         height: 400px;
     }
 }
+
+@media screen and (max-width: 780px) {
+    .serviceImg {
+        height: 250px;
+    }
+}

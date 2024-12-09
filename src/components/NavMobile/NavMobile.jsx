@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { Squash as Hamburger } from "hamburger-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from 'antd';
 import { useClickOutside } from "../../hooks/useClickOutside";
 import Navbar from "../Navbar/Navbar";
@@ -27,10 +27,18 @@ function NavMobile() {
         <div ref={ref}>
             <Hamburger toggled={isOpen} size={10} toggle={setIsOpen} className={classes.burger} />
             {isOpen ?
-                (<div className={classes.navItems}>
-                    <Navbar handleBurgerClose={handleClose} />
-                    <Button onClick={handleButtonClick}>Оставить заявку</Button>
-                </div>)
+                (<motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    <div className={classes.navItems}>
+                        <Button onClick={handleButtonClick}>Оставить заявку</Button>
+                        <Navbar handleBurgerClose={handleClose} />
+                    </div>
+                </motion.div>
+                )
                 : null}
         </div>
     )

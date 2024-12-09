@@ -3,7 +3,7 @@ import { COLUMNS, DATA } from "../../constants/requisitesData";
 
 function RequisitesSection() {
     return (
-        <Table dataSource={DATA} columns={COLUMNS} showHeader={false} pagination={false} align="left" />
+        <Table tableLayout="fixed" dataSource={DATA} columns={COLUMNS} showHeader={false} pagination={false} align="left" />
     )
 };
 

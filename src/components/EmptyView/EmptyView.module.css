@@ -5,3 +5,9 @@
     width: 100%;
     height: calc(100dvh - 80px - 400px);
 }
+
+@media screen and (max-width: 920px) {
+    .emptyContainer {
+        height: calc(100dvh - 120px - 400px);
+    }
+}
