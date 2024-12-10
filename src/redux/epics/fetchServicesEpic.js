@@ -8,7 +8,7 @@ const fetchServicesEpic = (action$) => action$.pipe(
     ofType('FETCH_SERVICES_START'),
     switchMap(() =>
         ajax({
-            url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRnAlvXcAKFung1YPlTzZghpXifv6ieXqGLV0GYCUhVYtysMMY4F_jBHr3wkJg9V4DXlATqtDFkUtNi/pub?output=csv",
+            url: `${import.meta.env.VITE_SHEET_URL}`,
             responseType: 'text',
         }).pipe(
             map((response) => {

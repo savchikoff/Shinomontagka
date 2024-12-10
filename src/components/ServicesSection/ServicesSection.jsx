@@ -1,25 +1,27 @@
 import { useSelector } from 'react-redux';
 import { Typography } from 'antd';
-import classes from './ServicesSection.module.css';
+import Skeleton from 'react-loading-skeleton';
+import { useMediaQuery } from 'react-responsive';
 import ServiceCard from '../ServiceCard/ServiceCard';
-import { selectAllServices } from '../../redux/selectors/servicesSelectors';
+import classes from './ServicesSection.module.css';
 
 const { Title, Text } = Typography;
 
 function ServicesSection() {
-    const services = useSelector(selectAllServices)
+    const { data, loading } = useSelector((state) => state.services);
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 920px)" });
 
     return (
         <section className={classes.servicesSectionWrapper}>
             <div className={classes.servicesSectionTextWrapper}>
                 <Title level={2}>Услуги</Title>
-                <Text>Если нужно качественное оказание услуг шиномонтажа, звоните по телефону: +375 (25) 918-08-08.</Text>
+                <Text>Если нужно качественное оказание услуг шиномонтажа, звоните по телефону: +375259183528.</Text>
             </div>
 
             <div className={classes.serviceCards}>
-
+                {loading ? <Skeleton height={isSmallScreen ? 520 : 400} /> : null}
                 {
-                    services.map(service => {
+                    data.map(service => {
                         const [id, name, price] = Object.values(service);
 
                         return (

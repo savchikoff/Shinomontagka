@@ -13,7 +13,7 @@ const sendEmailRequestEpic = (action$) =>
         ofType("SEND_EMAIL_REQUEST"),
         switchMap((action) =>
             ajax.post(
-                `http://localhost:3000/api/send-email`,
+                `${import.meta.env.VITE_API_URL}/api/send-email`,
                 action.payload,
                 { 'Content-Type': 'application/json' }
             ).pipe(

@@ -13,12 +13,14 @@ const contentStyle = {
 };
 
 function GallerySection() {
+
+    
     return (
         <div className={classes.gallerySectionWrapper}>
             <Title level={1}>
                 Галерея
             </Title>
-            <Carousel arrows dotPosition="left" infinite={false}>
+            <Carousel arrows dotPosition="left" infinite={false} className={classes.carousel}>
                 <div>
                     <h3 style={contentStyle}>1</h3>
                 </div>

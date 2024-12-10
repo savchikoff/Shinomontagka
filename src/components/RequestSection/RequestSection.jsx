@@ -12,9 +12,9 @@ function RequestSection() {
         <section className={classes.requestSectionContainer}>
             <Divider orientation="center">Контакты</Divider>
             <div className={classes.requestSectionWrapper}>
-                <Title level={1}>Оставьте заявку</Title>
+                <Title level={2}>Оставьте заявку</Title>
                 <Text className={classes.requestTextWrapper}>
-                    Заявки с сайта принимаются круглосуточно. С 09:00 до 21:00 по будним дням можно оформить заявку по телефону: +375 (25) 918-08-08.
+                    Заявки с сайта принимаются круглосуточно. С 09:00 до 21:00 по будним дням можно оформить заявку по телефону: +375259183528.
                 </Text>
                 <Button type="primary" onClick={handleModal}>Подробнее</Button>
             </div>

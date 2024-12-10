@@ -21,7 +21,7 @@ function Footer() {
                 <div className={classes.footerContacts}>
                     <div className={classes.footerContact}>
                         <PhoneOutlined />
-                        <a href="tel:+375333435866">+375333435866</a>
+                        <a href="tel:++375259183528">+375259183528</a>
                     </div>
                     <div className={classes.footerContact}>
                         <MailOutlined />

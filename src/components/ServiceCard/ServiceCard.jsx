@@ -25,7 +25,7 @@ function ServiceCard({ id, subheader, header, description, price, detailsLink, s
             <div className={classes.serviceCardLeft}>
                 <div className={classes.serviceCardLeftWrapper}>
                     <Title level={5}>{subheader}</Title>
-                    <Title level={2}>{header}</Title>
+                    <Title level={3}>{header}</Title>
                     <Text className={classes.textInfo}>{description}</Text>
                     <Title level={4} className={classes.textInfo}>{price} BYN</Title>
                     <div className={classes.buttons}>

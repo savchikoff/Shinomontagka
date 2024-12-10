@@ -4,3 +4,13 @@
     justify-content: center;
     flex-direction: column;
 }
+
+@media screen and (max-width: 780px) {
+    .carousel {
+        height: 250px !important;
+
+        >div {
+            height: 250px !important;
+        }
+    }
+}
