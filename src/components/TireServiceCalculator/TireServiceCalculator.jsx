@@ -42,8 +42,6 @@ function TireServiceCalculator() {
         const addedServices = selected.filter((service) => !selectedServices.includes(service));
         const removedServices = selectedServices.filter((service) => !selected.includes(service));
 
-        console.log(addedServices);
-
         addedServices.forEach((service) => {
             dispatch(addSelectedService(service));
         });
@@ -67,7 +65,7 @@ function TireServiceCalculator() {
     }, [data]);
 
     if (loading) {
-        return <Loader />
+        return <Loader isSmall />
     }
 
     return (
@@ -89,11 +87,14 @@ function TireServiceCalculator() {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Рассчитать
-                    </Button>
+                    <div className={classes.buttons}>
+                        <Button type="primary" htmlType="submit">
+                            Рассчитать
+                        </Button>
 
-                    {totalCost ? <Button type="primary" onClick={handleModal}>Подробнее</Button> : null}
+                        {totalCost ? <Button type="primary" onClick={handleModal}>Подробнее</Button> : null}
+                    </div>
+
                 </Form.Item>
             </Form>
 
